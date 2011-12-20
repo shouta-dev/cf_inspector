@@ -3,6 +3,7 @@ This tool generates the sequence html report of cloudfoundry.
 
 # setup
 Please setup by manual.
+
     export CF_HOME=~/cloudfoundry
     cd ~
     wget https://raw.github.com/shouta-dev/cf_inspector/master/cf_inspector/vmc_inspect .
@@ -12,8 +13,10 @@ Please setup by manual.
     
     require 'vcap/cf_inspector_ext'
     EOT
+
 # usage
 Please use vmc_inspect command like a normal vmc command.
+
     ruby vmc_inspect info
     
     VMware's Cloud Application Platform
