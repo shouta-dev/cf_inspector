@@ -30,7 +30,9 @@ Please use vmc_inspect command like a normal vmc command.
           Services (1 of 16 total)
           Apps     (3 of 20 total)
 
-    ls /tmp/*.html
+    /tmp/vmc_info_20111220_110420.html has been generated.
+    
+    $ls /tmp/*.html
     /tmp/vmc_info_20111220_110420.html
     
     $ruby vmc_inspect list
