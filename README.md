@@ -1,7 +1,7 @@
 # cf_inspector
 This tool generates the sequence html report of cloudfoundry.
 
-# setup
+## setup
 Please setup by manual.
 
     $export CF_HOME=~/cloudfoundry
@@ -14,7 +14,7 @@ Please setup by manual.
     require 'vcap/cf_inspector_ext'
     EOT
 
-# usage
+## usage
 Please use vmc_inspect command like a normal vmc command.
 
     $ruby vmc_inspect info
@@ -39,9 +39,9 @@ Please use vmc_inspect command like a normal vmc command.
     $ruby vmc_inspect push
     ...
 
-# generated file sample
+## generated file sample
 [sample1](http://cloud.github.com/downloads/shouta-dev/cf_inspector/vmc_list_20111220_135812.html)
 
-# License
+## License
 Apache2
 http://www.apache.org/licenses/LICENSE-2.0
