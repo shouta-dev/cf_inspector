@@ -1,5 +1,3 @@
-#!/home/shouta/.rvm/rubies/ruby-1.9.2-p180/bin/ruby
-
 ############### vmc extension
 require 'rubygems'
 version = ">= 0"
@@ -26,7 +24,7 @@ require Gem.bin_path('vmc', 'vmc', version).split('/')[0...-1].join('/') + "/../
 
 require "vcap/common"
 
-############### generate html files class definition
+############### class definition of html files generator
 require 'json'
 
 #load json object from log file
