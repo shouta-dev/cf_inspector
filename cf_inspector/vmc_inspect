@@ -145,4 +145,5 @@ ensure
   File.open(HTML_FILE_PATH,'w') do |fd|
     fd.puts html
   end
+  puts "#{HTML_FILE_PATH} has been generated."
 end
