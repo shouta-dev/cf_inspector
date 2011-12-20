@@ -4,12 +4,12 @@ This tool generates the sequence html report of cloudfoundry.
 # setup
 Please setup by manual.
 
-    export CF_HOME=~/cloudfoundry
-    cd ~
-    wget https://raw.github.com/shouta-dev/cf_inspector/master/cf_inspector/vmc_inspect .
-    wget https://raw.github.com/shouta-dev/cf_inspector/master/cf_inspector/cf_inspector_ext.rb .
-    mv ./cf_inspector_ext.rb $CF_HOME/vcap/common/lib/vcap
-    $CF_HOME/vcap/common/lib/vcap/common.rb << 'EOT'
+    $export CF_HOME=~/cloudfoundry
+    $cd ~
+    $wget https://raw.github.com/shouta-dev/cf_inspector/master/cf_inspector/vmc_inspect .
+    $wget https://raw.github.com/shouta-dev/cf_inspector/master/cf_inspector/cf_inspector_ext.rb .
+    $mv ./cf_inspector_ext.rb $CF_HOME/vcap/common/lib/vcap
+    $$CF_HOME/vcap/common/lib/vcap/common.rb << 'EOT'
     
     require 'vcap/cf_inspector_ext'
     EOT
@@ -17,7 +17,7 @@ Please setup by manual.
 # usage
 Please use vmc_inspect command like a normal vmc command.
 
-    ruby vmc_inspect info
+    $ruby vmc_inspect info
     
     VMware's Cloud Application Platform
     For support visit http://support.cloudfoundry.com
@@ -33,8 +33,8 @@ Please use vmc_inspect command like a normal vmc command.
     ls /tmp/*.html
     /tmp/vmc_info_20111220_110420.html
     
-    ruby vmc_inspect list
-    ruby vmc_inspect push
+    $ruby vmc_inspect list
+    $ruby vmc_inspect push
     ...
 
 # generated file sample
