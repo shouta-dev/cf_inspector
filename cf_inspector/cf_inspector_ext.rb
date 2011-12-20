@@ -1,0 +1,1 @@
+/home/shouta/cloudfoundry/vcap/common/lib/vcap/cf_inspector_ext.rb

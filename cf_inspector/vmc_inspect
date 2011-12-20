@@ -1,0 +1,150 @@
+#!/home/shouta/.rvm/rubies/ruby-1.9.2-p180/bin/ruby
+
+############### vmc extension
+require 'rubygems'
+version = ">= 0"
+
+if ARGV.first =~ /^_(.*)_$/ and Gem::Version.correct? $1 then
+  version = $1
+  ARGV.shift
+end
+gem 'vmc', version
+
+require 'time'
+FILE_PATH = "/tmp"
+LOG_FILE_PATH = FILE_PATH + "/cf_inspector.log"
+HTML_FILE_PATH = FILE_PATH + "/vmc_#{ARGV[0]}_#{Time.now.strftime("%Y%m%d_%H%M%S")}.html"
+CF_HOME = ENV["CF_HOME"] || "~/cloudfoundry"
+
+#clear log file
+File.open(LOG_FILE_PATH,'w') do |fd|
+  fd.puts ""
+end
+
+$LOAD_PATH.push("#{CF_HOME}/vcap/common/lib")
+require Gem.bin_path('vmc', 'vmc', version).split('/')[0...-1].join('/') + "/../lib/cli"
+
+require "vcap/common"
+
+############### generate html files class definition
+require 'json'
+
+#load json object from log file
+class HtmlGenerator
+  COMPONENTS = %w(vmc cloud_controller router dea services health_manager stager staging dev_setup)
+  def initialize(file_path)
+    @inspect_list = []
+    open(file_path) {|file|
+      while line = file.gets
+        begin
+          @inspect_list << JSON.parse(line)
+        rescue
+        end
+      end
+    }
+    @html = ""
+  end
+
+  def generate
+    write_header
+    write_body
+    write_footer
+    @html
+  end
+
+  def write_header
+    @html += <<-"EOS"
+      <html>
+        <head>
+          <title>cd_inspector result</title>
+          <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+          <style TYPE="text/css">
+            table {
+              width : 98%;
+            }
+            .detail {
+              width : 100%;
+              height : 100px;
+              display : none;
+            }
+            .none {
+              text-align:center;
+            }
+            .summary {
+              cursor : pointer;
+              font-weight : bold;
+            }
+          </style>
+        </head>
+        <body>
+    EOS
+  end
+
+  def write_footer
+    @html += "</body></html>"
+  end
+
+  def write_body
+    status = :skip
+    @inspect_list.each_with_index do |one_line, index|
+      if one_line['type'] == 'vmc_start'
+        status = :working
+        one_line['type'] = 'vmc'
+        write_table_header
+      end
+
+      if one_line['type'] == 'vmc_end'
+        write_table_footer
+        status = :skip
+      end
+
+      if status == :working
+        write_table_body(one_line, index)
+      end
+    end
+  end
+
+  def write_table_header
+    @html += "<table border><thead><tr>"
+    COMPONENTS.each do |component|
+      @html += "<th>#{component}</th>"
+    end
+    @html += "</tr></thead>"
+  end
+
+  def write_table_footer
+    @html += "</table>"
+  end
+
+  def write_table_body(one_line, index)
+    @html += "<tr>"
+    COMPONENTS.each do |component|
+      @html += "<td>"
+      if one_line["node"] == component
+        @html += <<-"EOS"
+          <span class="summary" onclick='$("#textarea_#{index}").toggle();'>
+            #{one_line['type']}<br/>#{one_line['key']}
+          </span>
+          <br/>
+          <textarea readonly id='textarea_#{index}' class='detail'>#{one_line['detail'].join("\n")}</textarea>
+        EOS
+      else
+        @html += "<div class='none'>-<\div>"
+      end
+      @html += "</td>"
+    end
+    @html += "</tr>"
+  end
+
+end
+
+
+############### vmc execution
+begin
+  load Gem.bin_path('vmc', 'vmc', version)
+ensure
+  html = HtmlGenerator.new(LOG_FILE_PATH).generate
+  File.open(HTML_FILE_PATH,'w') do |fd|
+    fd.puts html
+  end
+end
