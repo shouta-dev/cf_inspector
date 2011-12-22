@@ -2,7 +2,10 @@
 This tool generates the sequence html report of cloudfoundry.
 
 ## setup
-Please setup by manual.
+Please setup cloudfoundry all-in-one (below link)
+https://github.com/cloudfoundry/vcap/blob/master/README.md
+
+Please setup cf_inspector by manual.
 
     $export CF_HOME=~/cloudfoundry
     $cd ~
@@ -45,3 +48,6 @@ Please use vmc_inspect command like a normal vmc command.
 ## License
 Apache2
 http://www.apache.org/licenses/LICENSE-2.0
+
+## Contact
+[twitter : @shouta_dev](http://twitter.com/shouta_dev/)
