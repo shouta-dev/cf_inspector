@@ -54,7 +54,7 @@ class HtmlGenerator
     @html += <<-"EOS"
       <html>
         <head>
-          <title>cd_inspector result</title>
+          <title>cf_inspector result</title>
           <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
           <style TYPE="text/css">
             table {
